@@ -10,34 +10,42 @@ end
 # Si la clé contient une des pages suivantes, ça veut dire que l'update n'est pas valide
 def solve_part_one(inputs)
   total = 0
-  all_rules = Hash.new
   page_rules = inputs[0].split(/\n/)
   page_updates = inputs[1].split(/\n/).map{_1.split(",")}.map{_1.map(&:to_i)}
-
-  page_rules.each do |rule|
-    a = rule.split("|").map &:to_i
-    if all_rules[a[0]].nil? 
-      all_rules[a[0]] = [a[1]]
-    else
-      all_rules[a[0]] << a[1]
-    end
-  end
+  all_rules = build_rules_hash(page_rules)
 
   page_updates.each do |update|
-    update = update.reverse
-    update_is_valid = true
+    total += update[update.size / 2] if update_is_valid(update, all_rules)
+  end
+  total
+end
+
+def build_rules_hash(page_rules)
+  all_rules = Hash.new
+  page_rules.each do |rule|
+    rule_split = rule.split("|").map &:to_i
+    if all_rules[rule_split[0]].nil? 
+      all_rules[rule_split[0]] = [rule_split[1]]
+    else
+      all_rules[rule_split[0]] << rule_split[1]
+    end
+  end
+  all_rules
+end
+
+def update_is_valid(update, rules_list)
+  update = update.reverse
+    is_valid = true
     i = 1
     update.each do |page_number|
-      unless all_rules[page_number].nil?
-        if all_rules[page_number].intersection(update.last(update.size - i)).any?
-          update_is_valid = false
+      unless rules_list[page_number].nil?
+        if rules_list[page_number].intersection(update.last(update.size - i)).any?
+          is_valid = false
         end
       end
       i += 1
     end
-    total += update[update.size / 2] if update_is_valid
-  end
-  total
+    is_valid
 end
 
 
