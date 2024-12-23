@@ -32,16 +32,14 @@ end
 def solve_part_one(input)
   total = 0
   input.each do |line|
-    a = line.split(": ")
+    a = line.split(': ')
     test_value = a[0].to_i
-    numbers = a[1].split.map &:to_i
+    numbers = a[1].split.map(&:to_i)
     calculator = CombinationCalculator.new(numbers, [:+, :*])
     results = calculator.calculate_combinations
-    if results.include? test_value
-      total += test_value
-    end
+    total += test_value if results.include? test_value
   end
   total
 end
 
-puts solve_part_one(read_input_file("./day_07/input.txt"))
+puts solve_part_one(read_input_file('./day_07/input.txt'))

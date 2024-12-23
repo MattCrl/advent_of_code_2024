@@ -4,21 +4,21 @@ end
 
 # returns 2 arrays
 def split_input_arrays
-  inputs = read_input_file("./day_01/input.txt")
+  inputs = read_input_file('./day_01/input.txt')
 
   distance_list_1 = []
   distance_list_2 = []
 
   inputs.each do |line|
-    line_splitted = line.split("   ")
+    line_splitted = line.split('   ')
     distance_list_1 << line_splitted[0].to_i
     distance_list_2 << line_splitted[1].to_i
   end
 
-  return distance_list_1, distance_list_2
+  [distance_list_1, distance_list_2]
 end
 
-def solve_part_one(inputs)
+def solve_part_one(_inputs)
   distance_list_1, distance_list_2 = split_input_arrays
   distance_list_1 = distance_list_1.sort
   distance_list_2 = distance_list_2.sort
@@ -31,9 +31,9 @@ def solve_part_one(inputs)
   total
 end
 
-puts solve_part_one(read_input_file("./day_01/input.txt"))
+puts solve_part_one(read_input_file('./day_01/input.txt'))
 
-def solve_part_two(inputs)
+def solve_part_two(_inputs)
   distance_list_1, distance_list_2 = split_input_arrays
 
   total = 0
@@ -44,4 +44,4 @@ def solve_part_two(inputs)
   total
 end
 
-puts solve_part_two(read_input_file("./day_01/input.txt"))
+puts solve_part_two(read_input_file('./day_01/input.txt'))
